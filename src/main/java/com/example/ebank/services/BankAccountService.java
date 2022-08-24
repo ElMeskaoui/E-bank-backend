@@ -193,4 +193,11 @@ public class BankAccountService implements BankService{
         accountHistoryDto.setCurrentPage(page);
         return accountHistoryDto;
     }
+
+    @Override
+    public List<CustomerDto> searchCustomer(String keyword) {
+        List<Customer> customers=customerRepository.searchCustomer(keyword);
+        List<CustomerDto> customerDtoList = customers.stream().map(customer -> bankAccountMapper.fromCustomer(customer)).collect(Collectors.toList());
+        return customerDtoList;
+    }
 }
