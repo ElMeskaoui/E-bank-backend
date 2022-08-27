@@ -188,6 +188,7 @@ public class BankAccountService implements BankService{
         accountHistoryDto.setOperationDtoList(collect);
         accountHistoryDto.setAccountId(bankAccount.getId());
         accountHistoryDto.setBalance(bankAccount.getBalance());
+        accountHistoryDto.setCurrency(bankAccount.getCurrency());
         accountHistoryDto.setPageSize(size);
         accountHistoryDto.setTotalPages(accountOperation.getTotalPages());
         accountHistoryDto.setCurrentPage(page);

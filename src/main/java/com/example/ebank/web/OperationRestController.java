@@ -1,8 +1,6 @@
 package com.example.ebank.web;
 
-import com.example.ebank.dtos.AddOperationDto;
-import com.example.ebank.dtos.OperationDto;
-import com.example.ebank.dtos.TransferOperationDto;
+import com.example.ebank.dtos.*;
 import com.example.ebank.exceptions.BalanceNotSufficientException;
 import com.example.ebank.exceptions.BankAccountNotFind;
 import com.example.ebank.services.BankAccountService;
@@ -28,5 +26,19 @@ public class OperationRestController {
     @PostMapping("/bankAccounts/{id}/operation/transfer")
     public void transferToAccount(@PathVariable(name = "id") String accountSourceId,@RequestBody TransferOperationDto transferOperationDto) throws BankAccountNotFind, BalanceNotSufficientException {
         bankAccountService.transfer(accountSourceId,transferOperationDto.getId(),transferOperationDto.getAmount());
+    }
+    @PostMapping("/account/debit")
+    public DebitDto debit(@RequestBody DebitDto debitDto) throws BankAccountNotFind, BalanceNotSufficientException {
+        this.bankAccountService.debit(debitDto.getAccountId(), debitDto.getAmount(), debitDto.getDescription());
+        return debitDto;
+    }
+    @PostMapping("/account/credit")
+    public CreditDto credit(@RequestBody CreditDto creditDto) throws BankAccountNotFind, BalanceNotSufficientException {
+        this.bankAccountService.debit(creditDto.getAccountId(), creditDto.getAmount(), creditDto.getDescription());
+        return creditDto;
+    }
+    @PostMapping("/account/transfer")
+    public void  transfer(@RequestBody TransferDto transferDto) throws BankAccountNotFind, BalanceNotSufficientException {
+        this.bankAccountService.transfer(transferDto.getAccountSource(),transferDto.getAccountDestination() , transferDto.getAmount());
     }
 }
