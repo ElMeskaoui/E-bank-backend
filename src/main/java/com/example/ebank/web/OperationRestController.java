@@ -34,7 +34,7 @@ public class OperationRestController {
     }
     @PostMapping("/account/credit")
     public CreditDto credit(@RequestBody CreditDto creditDto) throws BankAccountNotFind, BalanceNotSufficientException {
-        this.bankAccountService.debit(creditDto.getAccountId(), creditDto.getAmount(), creditDto.getDescription());
+        this.bankAccountService.credit(creditDto.getAccountId(), creditDto.getAmount(), creditDto.getDescription());
         return creditDto;
     }
     @PostMapping("/account/transfer")

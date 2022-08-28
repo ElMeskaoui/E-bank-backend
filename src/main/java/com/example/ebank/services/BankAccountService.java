@@ -182,7 +182,7 @@ public class BankAccountService implements BankService{
     @Override
     public AccountHistoryDto getAccountHistory(String accountId, int page, int size) throws BankAccountNotFind {
         BankAccount bankAccount = bankAccountRepository.findById(accountId).orElseThrow(()->new BankAccountNotFind("Bank Account Not Find"));
-        Page<Operation> accountOperation = operationRepository.findByBankAccountId(accountId, PageRequest.of(page, size));
+        Page<Operation> accountOperation = operationRepository.findByBankAccountIdOrderByOperationDateDesc(accountId, PageRequest.of(page, size));
         AccountHistoryDto accountHistoryDto=new AccountHistoryDto();
         List<OperationDto> collect = accountOperation.getContent().stream().map(op ->bankAccountMapper.fromOperation(op)).collect(Collectors.toList());
         accountHistoryDto.setOperationDtoList(collect);
