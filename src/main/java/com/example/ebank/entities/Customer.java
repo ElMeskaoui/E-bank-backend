@@ -7,15 +7,18 @@ import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
-public class Customer {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String email;
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class Customer extends User {
+    public Customer(long id, String name, String email, String password, Collection<Role> roles, List<BankAccount> bankAccounts) {
+        super(id, name, email, password, roles);
+        this.bankAccounts = bankAccounts;
+    }
+
     @OneToMany(mappedBy = "customer")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<BankAccount> bankAccounts;
