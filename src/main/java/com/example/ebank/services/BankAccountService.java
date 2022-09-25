@@ -14,9 +14,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.cert.Extension;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -34,11 +37,16 @@ public class BankAccountService implements BankService{
 
     @Override
     public CustomerDto saveCustomer(CustomerDto customerDto) {
-        log.info("Saving new Customer");
+//        log.info("Saving new Customer");
         Customer customer=bankAccountMapper.fromCustomerDto(customerDto);
         Customer savedCustomer=customerRepository.save(customer);
         return bankAccountMapper.fromCustomer(savedCustomer);
     }
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+
 
     @Override
     public CustomerDto updateCustomer(CustomerDto customerDto) {

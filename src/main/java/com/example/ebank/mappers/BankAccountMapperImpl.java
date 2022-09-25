@@ -10,6 +10,8 @@ import com.example.ebank.entities.Customer;
 import com.example.ebank.entities.Operation;
 import com.example.ebank.entities.SavingAccount;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,9 +22,14 @@ public class BankAccountMapperImpl {
         BeanUtils.copyProperties(customer,customerDto);
         return customerDto;
     }
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
     public Customer fromCustomerDto(CustomerDto customerDto){
         Customer customer=new Customer();
+        String pw = passwordEncoder().encode(customerDto.getPassword());
         BeanUtils.copyProperties(customerDto,customer);
+        customer.setPassword(pw);
         return customer;
     }
 

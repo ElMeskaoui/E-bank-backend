@@ -141,7 +141,8 @@ public class EBankApplication implements CommandLineRunner{
         customerRole.add(c);
         adminRole.add(a);
         customerRepository.save(new Customer(1,"elhoucine","elhouicne@gmail.com",passwordEncoder().encode("12345"),adminRole,null));
-        customerRepository.save(new Customer(2,"mkolich","mkolich@gmail.com",passwordEncoder().encode("87654"),customerRole,null));
+        customerRepository.save(new Customer(2,"mohmmed","mkolich@gmail.com",passwordEncoder().encode("87654"),customerRole,null));
+        customerRepository.save(new Customer(3,"ali","ali@gmail.com",passwordEncoder().encode("123"),customerRole,null));
 
     }
 }
